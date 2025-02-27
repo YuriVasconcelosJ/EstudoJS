@@ -17,11 +17,10 @@ app.get("/usuarios", (req, res) => {
 });
 
 // Rota GET - Buscar usuário por ID
-
 app.get("/usuario/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const usuario = usuarios.fing((u) => u.id === id);
-
+  const usuario = usuarios.find((u) => u.id === id);
+  // Se não achar o usuário retorna false
   if (!usuario) {
     return res.status(404).json({ mensagem: "Usuário não encontrado" });
   }
@@ -31,9 +30,10 @@ app.get("/usuario/:id", (req, res) => {
 
 // Rota POST - Criar um novo usuário
 app.post("/usuarios", (req, res) => {
+  // Desestruturação pegando do objeto somente chave nome
   const { nome } = req.body;
   const novoUsuario = { id: usuarios.length + 1, nome };
-
+  // Adicionando o novo user a lista
   usuarios.push(novoUsuario);
   res.status(201).json(novoUsuario);
 });
